@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>花蓮高中設備報修系統 - 管理員專區</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="remain.css">
+</head>
+<body class="bg-gray-100">
+  <header class="bg-school text-white shadow-md">
+    <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-xl font-bold">花蓮高中設備報修系統</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="index.html" class="hover:text-gray-300 transition">首頁</a></li>
+          <li><a href="status.html" class="hover:text-gray-300 transition">報修狀態查詢</a></li>
+          <li><span class="text-gray-400">管理員</span></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <div id="admin-list" class="flex flex-col lg:flex-row gap-8">
+      <div class="bg-white rounded-lg shadow-md p-6 w-full">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">報修清單</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">單號</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">日期</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">申請人</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">年級班級</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">建築物名稱</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">地點</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">報修項目類型</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">問題描述</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">接收狀態</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+              </tr>
+            </thead>
+            <tbody id="list-body" class="bg-white divide-y divide-gray-200">
+              <!-- 維修單列表將由 JS 渲染 -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 編輯維修記錄彈窗 -->
+  <div id="repair-record-form-container" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
+    <form id="repair-record-form" class="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl overflow-y-auto max-h-screen">
+      <h3 class="text-2xl font-bold text-gray-800 mb-6">維修記錄</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label for="record-id" class="block text-sm font-medium text-gray-700">報修單號</label>
+          <input type="text" id="record-id" class="input mt-1 bg-gray-100" readonly>
+        </div>
+        <div>
+          <label for="record-name" class="block text-sm font-medium text-gray-700">申請人姓名</label>
+          <input type="text" id="record-name" class="input mt-1 bg-gray-100" readonly>
+        </div>
+        <div>
+          <label for="record-email-student" class="block text-sm font-medium text-gray-700">學生信箱</label>
+          <input type="text" id="record-email-student" class="input mt-1 bg-gray-100" readonly>
+        </div>
+        <div>
+          <label for="record-email-teacher" class="block text-sm font-medium text-gray-700">教師信箱</label>
+          <input type="text" id="record-email-teacher" class="input mt-1 bg-gray-100" readonly>
+        </div>
+        <div>
+          <label for="record-location" class="block text-sm font-medium text-gray-700">維修地點</label>
+          <input type="text" id="record-location" class="input mt-1 bg-gray-100" readonly>
+        </div>
+        <div>
+          <label for="record-item" class="block text-sm font-medium text-gray-700">報修項目</label>
+          <input type="text" id="record-item" class="input mt-1 bg-gray-100" readonly>
+        </div>
+        <div class="md:col-span-2">
+          <label for="record-description" class="block text-sm font-medium text-gray-700">問題描述</label>
+          <textarea id="record-description" rows="4" class="input mt-1 bg-gray-100" readonly></textarea>
+        </div>
+        <div class="md:col-span-2">
+          <label for="record-status" class="block text-sm font-medium text-gray-700">維修狀態</label>
+          <select id="record-status" class="input mt-1">
+            <option value="新申請">新申請</option>
+            <option value="已接收">已接收</option>
+            <option value="處理中">處理中</option>
+            <option value="已完成">已完成</option>
+            <option value="暫緩處理">暫緩處理</option>
+          </select>
+        </div>
+        <div>
+          <label for="record-date" class="block text-sm font-medium text-gray-700">處理日期</label>
+          <input type="date" id="record-date" class="input mt-1">
+        </div>
+        <div>
+          <label for="record-person" class="block text-sm font-medium text-gray-700">維修人員</label>
+          <input type="text" id="record-person" class="input mt-1">
+        </div>
+        <div>
+          <label for="record-materials" class="block text-sm font-medium text-gray-700">材料費用</label>
+          <textarea id="record-materials" rows="2" class="input mt-1"></textarea>
+        </div>
+        <div>
+          <label for="record-notes" class="block text-sm font-medium text-gray-700">維修備註</label>
+          <textarea id="record-notes" rows="4" class="input mt-1"></textarea>
+        </div>
+      </div>
+      <div class="flex justify-end space-x-3 mt-6">
+        <button type="button" id="btn-record-cancel" class="btn-gray">取消</button>
+        <button type="submit" id="btn-record-save" class="btn btn-school">儲存</button>
+      </div>
+    </form>
+  </div>
+  
+  <script src="admin.js"></script>
+</body>
+</html>

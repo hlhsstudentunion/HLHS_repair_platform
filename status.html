@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>花蓮高中設備報修系統 - 狀態查詢</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="remain.css">
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+  <header class="bg-school text-white shadow-md">
+    <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-xl font-bold">花蓮高中設備報修系統</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="index.html" class="hover:text-gray-300 transition">首頁</a></li>
+          <li><a href="status.html" class="hover:text-gray-300 transition">報修狀態查詢</a></li>
+          <li><button type="button" id="btn-login" class="hover:text-gray-300 transition">管理員</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <div class="max-w-xl mx-auto">
+      <!-- 查詢區塊 - 卡片樣式 -->
+      <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">報修狀態查詢</h2>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <input type="text" id="rid" placeholder="請輸入報修單號" class="flex-1 input-field p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-school-light transition">
+          <button type="button" id="btn-search" class="btn btn-school py-3 px-6 rounded-lg font-bold text-lg">查詢</button>
+        </div>
+      </div>
+
+      <!-- 查詢結果區塊 -->
+      <div id="result-container" class="bg-white rounded-xl shadow-md p-6 mb-6 hidden">
+        <h3 id="result-id" class="text-xl font-bold mb-2"></h3>
+        <p id="result-status" class="text-2xl font-bold mb-4"></p>
+
+        <!-- 報修資訊 - 兩欄排版 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700 mb-6">
+          <div class="space-y-2">
+            <p><strong>申請人：</strong> <span id="result-name"></span></p>
+            <p><strong>班級/座號：</strong> <span id="result-class"></span></p>
+            <p><strong>地點：</strong> <span id="result-location"></span></p>
+            <p><strong>品項：</strong> <span id="result-item"></span></p>
+            <p><strong>申請時間：</strong> <span id="result-timestamp"></span></p>
+          </div>
+          <div class="space-y-2">
+            <p><strong>問題描述：</strong> <span id="result-description"></span></p>
+          </div>
+        </div>
+
+        <!-- 維修紀錄 - 獨立卡片 -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h4 class="text-lg font-bold mb-2 text-gray-800">維修紀錄</h4>
+          <div class="space-y-2 text-gray-700">
+            <p><strong>維修人員：</strong> <span id="result-editor"></span></p>
+            <p><strong>處理日期：</strong> <span id="result-process-date"></span></p>
+            <p><strong>備註：</strong> <span id="result-notes"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 查無此單區塊 -->
+      <div id="no-result" class="bg-white rounded-xl shadow-md p-6 hidden">
+        <h3 class="text-xl font-semibold text-center text-gray-600">查無此報修單。</h3>
+        <p class="text-center text-gray-500 mt-2">請確認單號是否正確。</p>
+      </div>
+
+      <!-- 狀態說明區塊 -->
+
+    <div class="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">報修狀態說明</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-100 p-4 rounded-md">
+          <h3 class="text-lg font-semibold mb-2 text-blue-600">已接收</h3>
+          <p class="text-gray-700">報修單已被總務處接收，等待分配給相應的維修人員。</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-md">
+          <h3 class="text-lg font-semibold mb-2 text-yellow-600">處理中</h3>
+          <p class="text-gray-700">維修人員已接單並正在處理問題，可能包括評估、採購零件或進行維修工作。</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-md">
+          <h3 class="text-lg font-semibold mb-2 text-green-600">已完成</h3>
+          <p class="text-gray-700">維修工作已完成，問題已解決。如有任何疑問，請聯繫總務處。</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-md">
+          <h3 class="text-lg font-semibold mb-2 text-red-600">暫緩處理</h3>
+          <p class="text-gray-700">由於特殊原因（如需要訂購特殊零件、等待專業人員等），維修工作暫時無法進行。</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <div id="login-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6">
+      <h3 class="text-xl font-semibold text-gray-800 mb-4">管理員登入</h3>
+      <form>
+        <div class="mb-4">
+          <label for="username" class="block text-sm font-medium text-gray-700 mb-1">帳號</label>
+          <input type="text" id="username" class="input">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密碼</label>
+          <input type="password" id="password" class="input">
+        </div>
+        <div class="flex justify-end space-x-3">
+          <button type="button" id="btn-cancel-login" class="btn-gray">取消</button>
+          <button type="submit" id="btn-login-submit" class="btn btn-school">登入</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="status.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

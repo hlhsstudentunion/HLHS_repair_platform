@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* ========= 校色 ========= */
+.bg-school {
+  background-color: #1a5276;
+}
+.btn-school {
+  background-color: #1a5276;
+}
+.btn-school:hover {
+  background-color: #154360;
+}
+
+/* ========= 共用樣式 ========= */
+
+/* 輸入框 / 下拉選單 / textarea */
+.input {
+  width: 100%;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.input:focus {
+  border-color: #3b82f6; /* focus:ring-blue-500 */
+  box-shadow: 0 0 0 2px #bfdbfe, 0 0 0 2px #3b82f6;
+}
+
+/* 按鈕基底 */
+.btn {
+  color: #ffffff;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.btn:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* 中性按鈕（灰色，用於取消） */
+.btn-gray {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  background-color: #ffffff;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.btn-gray:hover {
+  background-color: #f3f4f6;
+}
+
+/* 登入彈窗 */
+.login-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(107, 114, 128, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hidden {
+  display: none;
+}
+/* ========= 常見問題 / 最新公告 ========= */
+.faq-container,
+.announcement-container {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.faq-item {
+  margin-bottom: 1.5rem;
+}
+.faq-question {
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+.faq-answer {
+  color: #4b5563;
+}
+.announcement-item {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.announcement-item:last-child {
+  border-bottom: none;
+}
+.announcement-title {
+  font-weight: 600;
+  color: #1f2937;
+}
+.announcement-date {
+  font-size: 0.875rem;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+/* ========= 主內容佈局調整 ========= */
+.main-layout {
+  display: grid;
+  grid-template-columns: 1fr; /* 預設單欄 */
+  gap: 2rem; /* 區塊間距 */
+  max-width: 2560px; /* 從 1024px 增加到 1280px，讓內容更寬 */
+  margin: 0 auto; /* 置中 */
+  padding: 2rem 1rem; /* 內邊距 */
+}
+
+@media (min-width: 768px) { /* 當螢幕寬度大於或等於 768px 時 */
+  .main-layout {
+    grid-template-columns: 1fr 1fr; /* 兩欄佈局 */
+  }
+  .announcement-full-width {
+    grid-column: 1 / -1; /* 讓公告區塊橫跨所有列 */
+  }
+}
+
+/* 確保所有容器都有統一的背景和陰影 */
+.content-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

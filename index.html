@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>花蓮高中設備報修系統</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="remain.css">
+</head>
+<body class="bg-gray-100">
+  <header class="bg-school text-white shadow-md">
+    <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
+      <h1 class="text-xl font-bold">花蓮高中設備報修系統</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="index.html" class="hover:text-gray-300 transition">首頁</a></li>
+          <li><a href="status.html" class="hover:text-gray-300 transition">報修狀態查詢</a></li>
+          <li><button id="btn-login" class="hover:text-gray-300 transition">登入管理員</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="w-full lg:w-2/3">
+        <div class="flex justify-center mb-8">
+          <div class="relative inline-flex bg-gray-200 rounded-full p-1">
+            <button id="mode-student" class="px-6 py-2 rounded-full text-sm font-medium transition-colors duration-300 bg-school text-white shadow">學生報修</button>
+            <button id="mode-teacher" class="px-6 py-2 rounded-full text-sm font-medium transition-colors duration-300 text-gray-700 hover:text-school">老師報修</button>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">設備報修申請</h2>
+          <form id="repair-form" class="space-y-4">
+            
+            <div id="student-form-section">
+              <h3 class="text-xl font-semibold text-gray-700 mb-4">學生基本資料</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-700">姓名 <span class="text-red-500">*</span></label>
+                  <input type="text" id="name" name="name" class="input mt-1" required>
+                </div>
+                <div>
+                  <label for="id" class="block text-sm font-medium text-gray-700">學號 <span class="text-red-500">*</span></label>
+                  <input type="text" id="id" name="id" class="input mt-1" required>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="grade" class="block text-sm font-medium text-gray-700">年級 <span class="text-red-500">*</span></label>
+                  <select id="grade" name="grade" class="input mt-1" required>
+                    <option value="">請選擇年級</option>
+                    <option value="1">一年級</option>
+                    <option value="2">二年級</option>
+                    <option value="3">三年級</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="class" class="block text-sm font-medium text-gray-700">班級 <span class="text-red-500">*</span></label>
+                  <input type="text" id="class" name="class" class="input mt-1" required>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">報修內容</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="building" class="block text-sm font-medium text-gray-700">建築物名稱 <span class="text-red-500">*</span></label>
+                <select id="building" name="building" class="input mt-1" required>
+                  <option value="">請選擇建築物</option>
+                  <option value="1">忠孝樓</option>
+                  <option value="2">仁愛樓</option>
+                  <option value="3">信義樓</option>
+                  <option value="4">和平樓</option>
+                  <option value="5">綜合大樓</option>
+                  <option value="6">圖資大樓</option>
+                  <option value="7">藝才大樓</option>
+                  <option value="8">體育館</option>
+                  <option value="9">其他</option>
+                </select>
+              </div>
+              <div>
+                <label for="location" class="block text-sm font-medium text-gray-700">詳細位置/教室 <span class="text-red-500">*</span></label>
+                <input type="text" id="location" name="location" class="input mt-1" required>
+              </div>
+            </div>
+            <div>
+              <label for="itemType" class="block text-sm font-medium text-gray-700">報修物品類型 <span class="text-red-500">*</span></label>
+              <select id="itemType" name="itemType" class="input mt-1" required>
+                <option value="">請選擇類型</option>
+                <option value="1">電腦設備</option>
+                <option value="2">網路設備</option>
+                <option value="3">電力/燈光</option>
+                <option value="4">課桌椅</option>
+                <option value="5">門窗/鎖</option>
+                <option value="6">其他</option>
+              </select>
+            </div>
+            <div>
+              <label for="description" class="block text-sm font-medium text-gray-700">問題描述 <span class="text-red-500">*</span></label>
+              <textarea id="description" name="description" rows="4" class="input mt-1" placeholder="請詳細描述問題，例如：電腦無法開機，螢幕無顯示" required></textarea>
+            </div>
+            <hr class="border-gray-300">
+            
+            <h3 class="text-xl font-semibold text-gray-700 mb-4">聯絡資訊</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="teacherName" class="block text-sm font-medium text-gray-700">班級導師/處室人員姓名 <span class="text-red-500">*</span></label>
+                <input type="text" id="teacherName" name="teacherName" class="input mt-1" required>
+              </div>
+              <div>
+                <label for="teacherEmail" class="block text-sm font-medium text-gray-700">班級導師/處室人員 Email <span class="text-red-500">*</span></label>
+                <input type="email" id="teacherEmail" name="teacherEmail" class="input mt-1" required>
+              </div>
+              <div id="student-email-row">
+                <label for="contact" class="block text-sm font-medium text-gray-700">學生 Email <span class="text-red-500">*</span></label>
+                <input type="email" id="contact" name="contact" class="input mt-1" placeholder="請填寫學生 Email 以利接收報修進度通知" required>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button type="submit" class="btn btn-school">提交報修</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="w-full lg:w-1/3 space-y-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">注意事項</h2>
+          <div class="space-y-4 text-gray-600">
+            <p>1. 本系統目前主要服務對象為校內師生，請確實填寫相關資訊，以利後續維修作業進行。</p>
+            <p>2. 填寫完成後，系統會產生一組報修單號，請務必記下此號碼，以便在 <a href="status.html" class="text-school hover:underline">「報修狀態查詢」</a> 頁面追蹤進度。</p>
+            <p>3. 若您有任何疑問或緊急需求，請直接聯繫總務處，電話：(03)8576408 分機 220。</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">最新公告</h2>
+          <div class="announcement-list text-gray-600 space-y-4">
+            <div class="announcement-item">
+              <span class="announcement-title">系統正式上線公告</span>
+              <span class="announcement-date text-sm text-gray-500">2025-09-01</span>
+            </div>
+            <div class="announcement-item">
+              <span class="announcement-title">設備維護時間異動</span>
+              <span class="announcement-date text-sm text-gray-500">2025-08-28</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">常見問題</h2>
+          <div class="faq-list text-gray-600 space-y-4">
+            <div class="faq-item">
+              <h3 class="faq-question">Q: 如何查詢我的報修單進度？</h3>
+              <p class="faq-answer">A: 請點選上方「報修狀態查詢」，輸入您的報修單號即可查詢。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-question">Q: 我可以報修哪些設備？</h3>
+              <p class="faq-answer">A: 凡舉學校內的公共設備，如電腦、網路、燈光、課桌椅、門窗等，皆可使用本系統報修。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="successModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-6 text-center">
+      <div class="text-green-500 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <h4 class="text-2xl font-semibold text-gray-800 mt-4">提交成功！</h4>
+      <p class="text-gray-600 mb-2">您的報修單已成功送出！</p>
+      <p class="text-gray-600 mb-4">您的報修單號是：<span id="repairIdSpan" class="font-bold"></span></p>
+      <button id="closeSuccessModal" class="btn btn-school w-full">確認</button>
+    </div>
+  </div>
+
+  <div id="login-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-6">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4">管理員登入</h3>
+      <form>
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700 mb-1">帳號</label>
+          <input type="text" id="username" class="input" required>
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密碼</label>
+          <input type="password" id="password" class="input" required>
+        </div>
+        <div class="flex justify-end space-x-2 mt-4">
+          <button type="button" id="btn-cancel" class="btn btn-secondary">取消</button>
+          <button type="submit" id="btn-login-submit" class="btn btn-school">登入</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>
